@@ -1,0 +1,50 @@
+plugins {
+    id 'application'
+}
+
+group = 'vn.com.vietcombank.acqhub.sample'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JJWT 0.12.6: JWS (PS256) + JWE (RSA-OAEP-256 / A256GCM)
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+    // Bouncy Castle: JCE Provider & PKI
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.79'
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.79'
+
+    // Doc/ghi JSON cho cac envelope request/response
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.2'
+
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'vn.com.vietcombank.acqhub.sample.refundv4.RefundV4Client'
+}
+
+tasks.register('runMockServer', JavaExec) {
+    group = 'application'
+    description = 'Chay mock server gia lap phia VCB de test luong JWE/JWS refund v4 cuc bo, khong can endpoint VCB that.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'vn.com.vietcombank.acqhub.sample.refundv4.mock.MockVcbServer'
+}

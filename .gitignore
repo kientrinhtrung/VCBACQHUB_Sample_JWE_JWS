@@ -1,0 +1,22 @@
+# ===== Java / Gradle (Java/) =====
+Java/build/
+Java/.gradle/
+Java/out/
+Java/bin/
+*.class
+*.jar
+!Java/gradle/wrapper/gradle-wrapper.jar
+hs_err_pid*.log
+replay_pid*.log
+
+# ===== IDE =====
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
